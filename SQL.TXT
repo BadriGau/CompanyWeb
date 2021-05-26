@@ -1,0 +1,86 @@
+create database xyz;
+use xyz;
+CREATE TABLE department(
+	department_id INT PRIMARY KEY AUTO_INCREMENT,
+	department_name VARCHAR(50)
+);
+
+CREATE TABLE category(
+	category_id INT PRIMARY KEY AUTO_INCREMENT,
+	category_name VARCHAR(50)
+);
+
+CREATE TABLE employee(
+	employee_id INT PRIMARY KEY AUTO_INCREMENT,
+	employee_name VARCHAR(50),
+	employee_phone INT(9),
+	employee_department INT,
+	FOREIGN KEY(employee_department) REFERENCES department(department_id)
+);
+
+CREATE TABLE dbuser(
+	dbuser_id INT PRIMARY KEY AUTO_INCREMENT,
+	dbuser_name VARCHAR(50),
+	dbuser_password VARCHAR(50),
+	dbuser_employee INT,
+	FOREIGN KEY(dbuser_employee) REFERENCES employee(employee_id)
+);
+
+CREATE TABLE equipment(
+	equipment_id INT PRIMARY KEY AUTO_INCREMENT,
+	equipment_reference CHAR(8),
+	equipment_category INT,
+	equipment_employee INT,
+	FOREIGN KEY(equipment_category) REFERENCES category(category_id),
+	FOREIGN KEY(equipment_employee) REFERENCES employee(employee_id)
+);
+
+CREATE TABLE observation(
+	observation_id INT PRIMARY KEY AUTO_INCREMENT,
+	observation_equipment INT,
+	observation_content TEXT,
+	FOREIGN KEY(observation_equipment) REFERENCES equipment(equipment_id)
+);
+
+INSERT INTO department(department_name) VALUES
+	("Sales"),
+	("IT");
+	
+INSERT INTO category(category_name) VALUES
+	("Computer"),
+	("Mobile Phone"),
+	("Smartphone");
+	
+INSERT INTO employee(employee_name, employee_phone, employee_department) VALUES
+	("Antonio Alves",912345678,1),
+	("Barbara Borges",962233445,1),
+	("Carla Castanheira",933476098,2),
+	("Dinis Damas",926765234,2),
+	("Elsa Eira",969384750,1),
+	("Frederico Fortuna",928473920,2);
+
+INSERT INTO dbuser(dbuser_name,dbuser_password,dbuser_employee) VALUES
+	("aalves","202cb962ac59075b964b07152d234b70",1),
+	("ccastanheira","900150983cd24fb0d6963f7d28e17f72",3);
+	
+INSERT INTO equipment(equipment_reference, equipment_category, equipment_employee) VALUES
+	("PC111111",1,1),
+	("TS222221",2,1),
+	("PC111112",1,2),
+	("TS222223",2,2),
+	("PC111113",1,3),
+	("SP333331",3,3),
+	("PC111114",1,4),
+	("SP333332",3,4),
+	("PC111115",1,5),
+	("TS222222",2,6),
+	("PC111116",1,6),
+	("SP333333",3,6);
+	
+INSERT INTO observation(observation_equipment,observation_content) VALUES
+	(2,"3 key not working"),
+	(4,"Free calls"),
+	(6,"Android"),
+	(7,"Linux"),
+	(11,"OSX"),
+	(12,"iPhone");
